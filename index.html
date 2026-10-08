@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShopEasy | E-Commerce CRUD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>ShopEasy</h1>
+    <nav>
+      <button onclick="showView('shop')">Products</button>
+      <button onclick="showView('cart')">Cart <span id="cartCount" class="badge">0</span></button>
+      <button class="primary" onclick="openForm()">Add product</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Product list with search, filter and sort -->
+    <section id="shopView">
+      <div class="toolbar">
+        <input type="search" id="search" placeholder="Search products" oninput="renderProducts()">
+        <select id="category" onchange="renderProducts()"></select>
+        <select id="sort" onchange="renderProducts()">
+          <option value="default">Sort: Default</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+          <option value="az">Name: A to Z</option>
+          <option value="za">Name: Z to A</option>
+        </select>
+      </div>
+      <div id="productGrid" class="grid"></div>
+    </section>
+
+    <!-- Single product page -->
+    <section id="detailView" hidden></section>
+
+    <!-- Cart page -->
+    <section id="cartView" hidden></section>
+  </main>
+
+  <!-- Add / Edit product form -->
+  <dialog id="productDialog">
+    <form onsubmit="saveProduct(event)">
+      <h2 id="formTitle">Add product</h2>
+      <label>Name <input id="pName" required></label>
+      <label>Price (₹) <input id="pPrice" type="number" min="1" step="any" required></label>
+      <label>Category <input id="pCategory" list="categoryList" required></label>
+      <datalist id="categoryList"></datalist>
+      <label>Image URL (optional) <input id="pImage" type="url"></label>
+      <label>Description <textarea id="pDesc" rows="3"></textarea></label>
+      <div class="form-actions">
+        <button type="button" onclick="closeForm()">Cancel</button>
+        <button type="submit" class="primary">Save product</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
